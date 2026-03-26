@@ -9,12 +9,18 @@ left_knob = Motor(Port.A)
 right_knob = Motor(Port.B)
 rightButton = ForceSensor(Port.D)
 leftButton = ForceSensor(Port.F)
-
+exit = ForceSensor(Port.C)
 # Reset so center = 0
 left_knob.reset_angle(0)
 right_knob.reset_angle(0)
 
+exitCode = False
+
 while True:
+
+    if(exit.pressed()):
+        exitCode = not exitCode
+
     leftKnob = left_knob.angle()
     rightKnob = right_knob.angle()
     right = rightButton.pressed()
@@ -29,7 +35,7 @@ while True:
     if(leftKnob < -100):
         left_knob.reset_angle(-100)
     # Send tuple
-    print((rightKnob, leftKnob, left, right,))
-    hub.ble.broadcast((leftKnob, rightKnob, left, right,))
+    print((rightKnob, leftKnob, left, right,exitCode))
+    hub.ble.broadcast((leftKnob, rightKnob, left, right, exitCode))
 
     wait(50)
