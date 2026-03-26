@@ -36,7 +36,9 @@ def run(speed, turn):
     leftMotor.run(-left*100)
     rightMotor.run(right*100)
 
-
+def onExit():
+    leftMotor.run(0)
+    rightMotor.run(0)
 
 def flicker(target):
     
@@ -51,11 +53,18 @@ def flicker(target):
 while True:
     packets = hub.ble.observe(1)    
     if(packets != None):
-        #print(packets)
-        run(packets[1], packets[0])
-        if(packets[3] == True):
-            flicker(targetAttack)
-            print(leftFlick.angle, rightFlick.angle)
+        if(packets[4] == False):
+
+            print(packets)
+            run(packets[1], packets[0])
+            if(packets[3] == True):
+                flicker(targetAttack)
+                print(leftFlick.angle, rightFlick.angle)
+        if(packets[4] == True):
+            onExit()
+            running = False
+        elif():
+            running = True
     else:
         print("No packets")
     wait(100)
