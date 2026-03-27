@@ -21,6 +21,7 @@ while True:
     if(exit.pressed()):
         exitCode = not exitCode
 
+    
     leftKnob = left_knob.angle()
     rightKnob = right_knob.angle()
     right = rightButton.pressed()
